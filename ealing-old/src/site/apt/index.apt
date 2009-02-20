@@ -1,0 +1,17 @@
+About Ealing
+
+  A Java library for communicating with USB attached Garmin devices.
+
+  It's currently still at very early stage.
+  It can retrieve minimal information from a Garmin Forerunner 305,
+  but there's little documentation and hardly any unit tests yet.
+
+  If you are interested in knowing more please contact the owner at {{{mailto:owner@ealing.dev.java.net}owner@ealing.dev.java.net}}.
+  
+Participation
+
+  This is an open source project but it's a little early for much collaberation yet.
+  Hopefully that will change in a few weeks.
+  If you are interested in participating please send an inquiry to the owner at
+  {{{mailto:owner@ealing.dev.java.net}owner@ealing.dev.java.net}}.
+

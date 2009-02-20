@@ -1,0 +1,24 @@
+<project name="">
+  <!--
+  -->
+  <skin>
+    <groupId>org.jvnet.maven-javanet-skin
+    </groupId>
+    <artifactId>maven-javanet-skin</artifactId>
+    <version>1.2</version>
+  </skin>
+  <body>
+    <menu>
+      <item name="Introduction" href="index.html" />
+      <item name="API" href="nonav/apidocs/index.html" />
+      <item name="Mailing lists" href="servlets/ProjectMailingListList" />
+      <item name="Source code" href="source/browse/maven-javanet-skin/" />
+      <item name="Issues" href="servlets/ProjectIssues" />
+    </menu>
+
+    <!-- Probably not required, as API docs are explicitly handled
+         in the menu above.
+    <menu ref="reports" />
+    -->
+  </body>
+</project>

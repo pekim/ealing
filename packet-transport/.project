@@ -1,0 +1,14 @@
+<projectDescription>
+  <name>ealing-packet-transport</name>
+  <comment>A Java library for communicating with USB attached
+    Garmin devices.</comment>
+  <projects/>
+  <buildSpec>
+    <buildCommand>
+      <name>org.eclipse.jdt.core.javabuilder</name>
+    </buildCommand>
+  </buildSpec>
+  <natures>
+    <nature>org.eclipse.jdt.core.javanature</nature>
+  </natures>
+</projectDescription>

@@ -1,0 +1,16 @@
+<projectDescription>
+  <name>ealing-old</name>
+  <comment>A Java library for communicating with USB attached
+    Garmin devices.</comment>
+  <projects>
+    <project>ealing-packet-transport</project>
+  </projects>
+  <buildSpec>
+    <buildCommand>
+      <name>org.eclipse.jdt.core.javabuilder</name>
+    </buildCommand>
+  </buildSpec>
+  <natures>
+    <nature>org.eclipse.jdt.core.javanature</nature>
+  </natures>
+</projectDescription>
