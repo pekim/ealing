@@ -1,4 +1,5 @@
-package uk.co.pekim.ealing;
+package uk.co.pekim.ealing.transport;
+
 
 public interface DeviceNative {
     /**

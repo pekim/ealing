@@ -1,0 +1,36 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>uk.co.pekim.ealing</groupId>
+    <artifactId>ealing</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>ealing-common</artifactId>
+  <packaging>jar</packaging>
+  <name>Ealing - common stuff</name>
+  <version>0.0.1-SNAPSHOT</version>
+  <description>Common stuff for the Ealing library</description>
+  <url>https://ealing.dev.java.net/</url>
+  <developers>
+    <developer>
+      <name>Mike D Pilsbury</name>
+      <email>mike.pilsbury+ealing@gmail.com</email>
+      <timezone>0</timezone>
+    </developer>
+  </developers>
+  <dependencies>
+    <dependency>
+      <groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>
+      <version>1.4</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-lang</groupId>
+      <artifactId>commons-lang</artifactId>
+      <version>2.4</version>
+    </dependency>
+  </dependencies>
+</project>

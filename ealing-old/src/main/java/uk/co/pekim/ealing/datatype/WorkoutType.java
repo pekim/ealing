@@ -5,8 +5,8 @@ import java.util.List;
 
 import org.slf4j.Logger;
 
+import uk.co.pekim.ealing.DataUtils;
 import uk.co.pekim.ealing.SportType;
-import uk.co.pekim.ealing.packet.DataUtils;
 
 /**
  * A workout.

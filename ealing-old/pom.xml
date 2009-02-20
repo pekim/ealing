@@ -25,6 +25,11 @@
   <dependencies>
     <dependency>
       <groupId>uk.co.pekim.ealing</groupId>
+      <artifactId>ealing-common</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>uk.co.pekim.ealing</groupId>
       <artifactId>ealing-packet-transport</artifactId>
       <version>0.0.1-SNAPSHOT</version>
     </dependency>

@@ -6,9 +6,9 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 
+import uk.co.pekim.ealing.DataUtils;
 import uk.co.pekim.ealing.DeviceException;
 import uk.co.pekim.ealing.SportType;
-import uk.co.pekim.ealing.packet.DataUtils;
 
 /**
  * A run.

@@ -26,6 +26,7 @@ import uk.co.pekim.ealing.packet.RunPacket;
 import uk.co.pekim.ealing.packet.SessionStartedPacket;
 import uk.co.pekim.ealing.packet.StartSessionPacket;
 import uk.co.pekim.ealing.packet.TransferCompletePacket;
+import uk.co.pekim.ealing.transport.DeviceNative;
 
 import com.sun.jna.Platform;
 

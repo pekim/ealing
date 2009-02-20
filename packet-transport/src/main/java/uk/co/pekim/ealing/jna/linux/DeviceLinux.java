@@ -3,14 +3,14 @@ package uk.co.pekim.ealing.jna.linux;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import uk.co.pekim.ealing.DataUtils;
 import uk.co.pekim.ealing.DeviceException;
-import uk.co.pekim.ealing.DeviceNative;
 import uk.co.pekim.ealing.NoDeviceFoundException;
 import uk.co.pekim.ealing.jna.linux.LibUsb.USBBus;
 import uk.co.pekim.ealing.jna.linux.LibUsb.USBDevice;
 import uk.co.pekim.ealing.jna.linux.LibUsb.USBEndpointDescriptor;
 import uk.co.pekim.ealing.jna.linux.LibUsb.USBInterfaceDescriptor;
-import uk.co.pekim.ealing.packet.DataUtils;
+import uk.co.pekim.ealing.transport.DeviceNative;
 
 import com.sun.jna.Pointer;
 

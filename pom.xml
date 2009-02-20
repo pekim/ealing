@@ -133,6 +133,7 @@
   </distributionManagement>
 
   <modules>
+    <module>common</module>
     <module>ealing-old</module>
     <module>packet-transport</module>
   </modules>

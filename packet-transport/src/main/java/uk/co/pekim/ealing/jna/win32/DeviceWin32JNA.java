@@ -23,12 +23,12 @@ import org.slf4j.LoggerFactory;
 
 import uk.co.pekim.ealing.AccessDeniedException;
 import uk.co.pekim.ealing.DeviceException;
-import uk.co.pekim.ealing.DeviceNative;
 import uk.co.pekim.ealing.NoDeviceFoundException;
 import uk.co.pekim.ealing.jna.win32.Kernel32.OVERLAPPED;
 import uk.co.pekim.ealing.jna.win32.SetupAPI.SP_DEVICE_INTERFACE_DATA;
 import uk.co.pekim.ealing.jna.win32.SetupAPI.SP_DEVICE_INTERFACE_DETAIL_DATA;
 import uk.co.pekim.ealing.jna.win32.W32API.CTL_CODE;
+import uk.co.pekim.ealing.transport.DeviceNative;
 
 import com.sun.jna.Memory;
 import com.sun.jna.Native;

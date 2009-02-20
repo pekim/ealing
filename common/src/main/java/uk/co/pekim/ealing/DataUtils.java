@@ -1,4 +1,4 @@
-package uk.co.pekim.ealing.packet;
+package uk.co.pekim.ealing;
 
 import org.apache.commons.io.EndianUtils;
 import org.apache.commons.lang.ArrayUtils;

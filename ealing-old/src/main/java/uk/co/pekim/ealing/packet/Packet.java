@@ -7,6 +7,7 @@ import org.apache.commons.io.EndianUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import uk.co.pekim.ealing.DataUtils;
 import uk.co.pekim.ealing.Device;
 import uk.co.pekim.ealing.DeviceException;
 
