@@ -1,0 +1,14 @@
+minimize delay in asyncio thread
+  queue received packets for processing
+  separate thread for processing queued packets.
+  rename "recevier thread" to "async io thread" ?
+
+logging
+  sort out log messages in JNI code
+    convert from printf, and tidy
+
+use C++
+  easier exception handling?
+
+clean separation of library and application (separate packages and projects)
+
