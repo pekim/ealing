@@ -10,7 +10,7 @@
 
   <artifactId>ealing-old</artifactId>
   <packaging>jar</packaging>
-  <name>Ealing</name>
+  <name>Ealing - (OLD) current main subproject</name>
   <version>0.0.1-SNAPSHOT</version>
   <description>A Java library for communicating with USB attached
     Garmin devices.</description>
