@@ -85,8 +85,6 @@ public class Device {
     public void initialise(int unit) {
         LOGGER.info("Initialising Garmin USB device, unit " + unit);
         deviceNative.initialise(unit);
-//        ((DeviceJNA) deviceJNA).setStuffInDeviceJNI((DeviceJNI) deviceJNI);
-//        ((DeviceJNA) deviceJNA).setStuffFromDeviceJNI((DeviceJNI) deviceJNI);
         
         processReceivedDataThread.start();
         receiverThread.start();
