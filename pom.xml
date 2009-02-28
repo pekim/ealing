@@ -135,6 +135,6 @@
   <modules>
     <module>common</module>
     <module>core</module>
-    <module>packet-transport</module>
+    <module>native</module>
   </modules>
 </project>

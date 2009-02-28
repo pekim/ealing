@@ -30,7 +30,7 @@
     </dependency>
     <dependency>
       <groupId>uk.co.pekim.ealing</groupId>
-      <artifactId>ealing-packet-transport</artifactId>
+      <artifactId>ealing-native</artifactId>
       <version>0.0.1-SNAPSHOT</version>
     </dependency>
     <dependency>
