@@ -134,7 +134,7 @@
 
   <modules>
     <module>common</module>
-    <module>ealing-old</module>
+    <module>core</module>
     <module>packet-transport</module>
   </modules>
 </project>

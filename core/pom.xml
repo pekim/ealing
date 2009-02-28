@@ -8,9 +8,9 @@
     <version>0.0.1-SNAPSHOT</version>
   </parent>
 
-  <artifactId>ealing-old</artifactId>
+  <artifactId>ealing-core</artifactId>
   <packaging>jar</packaging>
-  <name>Ealing - (OLD) current main subproject</name>
+  <name>Ealing - core device and packet management</name>
   <version>0.0.1-SNAPSHOT</version>
   <description>A Java library for communicating with USB attached
     Garmin devices.</description>
