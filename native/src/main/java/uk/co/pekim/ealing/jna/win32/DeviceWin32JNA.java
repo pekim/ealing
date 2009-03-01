@@ -57,7 +57,6 @@ public class DeviceWin32JNA implements DeviceNative {
 
     private int deviceHandle = INVALID_HANDLE_VALUE;
     private int usbPacketSize;
-    private int apiVersion;
     private int interruptAsyncInEvent;
     private String devicePath;
 
@@ -123,7 +122,6 @@ public class DeviceWin32JNA implements DeviceNative {
         }
 
         LOGGER.debug("API version : " + apiVersion.getValue());
-        this.apiVersion = apiVersion.getValue();
     }
 
     /**
