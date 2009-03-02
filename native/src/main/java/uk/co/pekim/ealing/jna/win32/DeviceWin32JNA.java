@@ -63,7 +63,7 @@ public class DeviceWin32JNA implements DeviceNative {
     public DeviceWin32JNA() {
         //
     }
-    
+
     /* (non-Javadoc)
      * @see uk.co.pekim.garmin.DeviceNative#initialise(int)
      */
@@ -206,10 +206,28 @@ public class DeviceWin32JNA implements DeviceNative {
      * @see uk.co.pekim.garmin.DeviceNative#close()
      */
     public void close() {
-        if (!KERNEL32.CloseHandle(deviceHandle)) {
-            throw new DeviceException("Failed to close device, error " + getLastError());
+        if (deviceHandle == INVALID_HANDLE_VALUE) {
+            LOGGER.warn("Aleady closed");
+            return;
+        }
+
+        try {
+            if (!KERNEL32.CloseHandle(deviceHandle)) {
+                throw new DeviceException("Failed to close device, error " + getLastError());
+            }
+        } finally {
+            deviceHandle = INVALID_HANDLE_VALUE;
         }
     }
+
+    @Override
+    protected void finalize() throws Throwable {
+        if (deviceHandle != INVALID_HANDLE_VALUE) {
+            LOGGER.warn("Closing device in finalize");
+            close();
+        }
+    }
+
 
     public class Data extends Structure {
         Data(byte[] data) {
@@ -217,7 +235,7 @@ public class DeviceWin32JNA implements DeviceNative {
         }
         public byte[] data;
     }
-    
+
     /* (non-Javadoc)
      * @see uk.co.pekim.garmin.DeviceNative#sendPacket(byte[])
      */
@@ -268,7 +286,7 @@ public class DeviceWin32JNA implements DeviceNative {
             // we sometimes get called (validly) to send 1 byte.
             Memory buffer = new Memory(length + 1);
             buffer.write(0, data, index, length);
-            
+
             LOGGER.debug("Writing " + length + " bytes");
             if (!KERNEL32.WriteFile(deviceHandle, buffer, length, null, overlapped)) {
                 if (getLastError() != ERROR_IO_PENDING) {
@@ -294,7 +312,7 @@ public class DeviceWin32JNA implements DeviceNative {
         LOGGER.debug("Wrote " + length + " bytes");
         return bytesWritten.getValue();
     }
-    
+
     /* (non-Javadoc)
      * @see uk.co.pekim.garmin.DeviceNative#receiveAsync()
      */

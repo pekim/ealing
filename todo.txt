@@ -7,8 +7,13 @@ logging
   sort out log messages in JNI code
     convert from printf, and tidy
 
-use C++
-  easier exception handling?
-
 clean separation of library and application (separate packages and projects)
 
+finalizer for DeviceNative implementations?
+  Do we need to do any cleanup?
+
+remove ealing-common
+  move exception(s) back in to core and native
+  native exceptions not to extend core/common exception
+  in core, wrap (chain) native exceptions in core's exception
+  move other common's classes back in to core
