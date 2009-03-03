@@ -10,14 +10,14 @@ public interface DeviceNative {
      *            
      * @throws NoDeviceFoundException if the device can't be found or any necessary
      *          driver is not installed.
-     * @throws DeviceException if initialisation fails.
+     * @throws NativeDeviceException if initialisation fails.
      */
     public void initialise(int unit);
 
     /**
      * Close the device.
      * 
-     * @throws DeviceException if an error is encountered during the closing.
+     * @throws NativeDeviceException if an error is encountered during the closing.
      */
     public void close();
 

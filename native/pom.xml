@@ -23,17 +23,14 @@
   </developers>
   <dependencies>
     <dependency>
-      <groupId>uk.co.pekim.ealing</groupId>
-      <artifactId>ealing-common</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
-    </dependency>
-    <dependency>
       <groupId>net.java.dev.jna</groupId>
       <artifactId>jna</artifactId>
-      <!--
-      <version>3.0.3-patch-1</version>
-      -->
       <version>3.0.9</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>
+      <version>1.4</version>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>

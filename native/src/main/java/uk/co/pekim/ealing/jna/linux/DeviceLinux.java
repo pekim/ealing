@@ -1,10 +1,10 @@
 package uk.co.pekim.ealing.jna.linux;
 
+import org.apache.commons.io.EndianUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import uk.co.pekim.ealing.DataUtils;
-import uk.co.pekim.ealing.DeviceException;
+import uk.co.pekim.ealing.NativeDeviceException;
 import uk.co.pekim.ealing.NoDeviceFoundException;
 import uk.co.pekim.ealing.jna.linux.LibUsb.USBBus;
 import uk.co.pekim.ealing.jna.linux.LibUsb.USBDevice;
@@ -89,19 +89,19 @@ public class DeviceLinux implements DeviceNative {
 
         deviceHandle = LIBUSB.usb_open(garminDevice);
         if (deviceHandle.equals(Pointer.NULL)) {
-            throw new DeviceException("usb_open failed, error "
+            throw new NativeDeviceException("usb_open failed, error "
                     + LIBUSB.usb_strerror());
         }
 
         if (LIBUSB.usb_set_configuration(deviceHandle, 1) < 0) {
-            throw new DeviceException(
+            throw new NativeDeviceException(
                     "usb_set_configuration failed , error "
                             + LIBUSB.usb_strerror()
                             + " - Likely to be either a permission problem, or the device is in use");
         }
 
         if (LIBUSB.usb_claim_interface(deviceHandle, 0) < 0) {
-            throw new DeviceException("usb_claim_interface failed, error "
+            throw new NativeDeviceException("usb_claim_interface failed, error "
                     + LIBUSB.usb_strerror());
         }
 
@@ -134,13 +134,13 @@ public class DeviceLinux implements DeviceNative {
         }
 
         if (bulkIn == 0) {
-            throw new DeviceException("Failed to get endpoint : bulk in");
+            throw new NativeDeviceException("Failed to get endpoint : bulk in");
         }
         if (bulkOut == 0) {
-            throw new DeviceException("Failed to get endpoint : bulk out");
+            throw new NativeDeviceException("Failed to get endpoint : bulk out");
         }
         if (interruptIn == 0) {
-            throw new DeviceException("Failed to get endpoint : interrupt in");
+            throw new NativeDeviceException("Failed to get endpoint : interrupt in");
         }
 
         // The USB packet size. Needed when sending data to the device.
@@ -226,7 +226,8 @@ public class DeviceLinux implements DeviceNative {
             packet = newPacket;
 
             if (packet.length >= 12) {
-                expectedPacketLength = (int) (12 + DataUtils.getU32(packet, 8));
+                long dataLength = EndianUtils.readSwappedUnsignedInteger(packet, 8);
+                expectedPacketLength = (int) (12 + dataLength);
             }
 
             if (packet.length < expectedPacketLength) {

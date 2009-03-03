@@ -6,7 +6,7 @@ package uk.co.pekim.ealing;
  * @author Mike D Pilsbury
  *
  */
-public class NoDeviceFoundException extends DeviceException {
+public class NoDeviceFoundException extends NativeDeviceException {
     private static final long serialVersionUID = 8692356329216802523L;
 
     public NoDeviceFoundException(String message) {

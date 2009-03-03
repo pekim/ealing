@@ -84,7 +84,11 @@ public class Device {
      */
     public void initialise(int unit) {
         LOGGER.info("Initialising Garmin USB device, unit " + unit);
-        deviceNative.initialise(unit);
+        try {
+            deviceNative.initialise(unit);
+        } catch (NativeDeviceException nativeDeviceException) {
+            throw new DeviceException(nativeDeviceException);
+        }
         
         processReceivedDataThread.start();
         receiverThread.start();
@@ -96,7 +100,11 @@ public class Device {
         packet.log("Send");
         
         byte[] nativeFormatPacket = packet.toNativeFormat();
-        deviceNative.sendPacket(nativeFormatPacket);
+        try {
+            deviceNative.sendPacket(nativeFormatPacket);
+        } catch (NativeDeviceException nativeDeviceException) {
+            throw new DeviceException(nativeDeviceException);
+        }
         
         bytesSent += nativeFormatPacket.length;
     }
@@ -128,7 +136,11 @@ public class Device {
             LOGGER.error("Interrupted waiting for " + processReceivedDataThread.getName() + " to terminate", e);
         }
 
-        deviceNative.close();
+        try {
+            deviceNative.close();
+        } catch (NativeDeviceException nativeDeviceException) {
+            throw new DeviceException(nativeDeviceException);
+        }
         
         for (DeviceListener listener : listeners) {
         	listener.closed();
@@ -289,16 +301,24 @@ public class Device {
     }
 
     public byte[] receiveAsync() {
-        byte[] data = deviceNative.receiveAsync();
-        if (data != null) {
-            bytesReceived += data.length;
+        try {
+            byte[] data = deviceNative.receiveAsync();
+            if (data != null) {
+                bytesReceived += data.length;
+            }
+            
+            return data;
+        } catch (NativeDeviceException nativeDeviceException) {
+            throw new DeviceException(nativeDeviceException);
         }
-        
-        return data;
     }
 
     public void interruptAsyncIn() {
-        deviceNative.interruptAsyncIn();
+        try {
+            deviceNative.interruptAsyncIn();
+        } catch (NativeDeviceException nativeDeviceException) {
+            throw new DeviceException(nativeDeviceException);
+        }
     }
 
     public long getBytesSent() {

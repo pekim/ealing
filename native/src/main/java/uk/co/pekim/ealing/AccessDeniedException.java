@@ -6,7 +6,7 @@ package uk.co.pekim.ealing;
  * @author Mike D Pilsbury
  *
  */
-public class AccessDeniedException extends DeviceException {
+public class AccessDeniedException extends NativeDeviceException {
     private static final long serialVersionUID = 8692356329216802523L;
 
     public AccessDeniedException(String message) {

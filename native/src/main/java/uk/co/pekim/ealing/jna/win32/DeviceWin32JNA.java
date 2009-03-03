@@ -22,7 +22,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import uk.co.pekim.ealing.AccessDeniedException;
-import uk.co.pekim.ealing.DeviceException;
+import uk.co.pekim.ealing.NativeDeviceException;
 import uk.co.pekim.ealing.NoDeviceFoundException;
 import uk.co.pekim.ealing.jna.win32.Kernel32.OVERLAPPED;
 import uk.co.pekim.ealing.jna.win32.SetupAPI.SP_DEVICE_INTERFACE_DATA;
@@ -69,7 +69,7 @@ public class DeviceWin32JNA implements DeviceNative {
      */
     public void initialise(int unit) {
         if (deviceHandle != INVALID_HANDLE_VALUE) {
-            throw new DeviceException("Already initialised");
+            throw new NativeDeviceException("Already initialised");
         }
 
         int hDevInfo = getDeviceInfo();
@@ -89,7 +89,7 @@ public class DeviceWin32JNA implements DeviceNative {
     private void createInterruptAsyncInEvent() {
         interruptAsyncInEvent = KERNEL32.CreateEventA(null, true, false, null);
         if (interruptAsyncInEvent == 0) {
-            throw new DeviceException("CreateEvent failed, error " + getLastError());
+            throw new NativeDeviceException("CreateEvent failed, error " + getLastError());
         }
     }
 
@@ -102,7 +102,7 @@ public class DeviceWin32JNA implements DeviceNative {
         packetSize.getPointer();
         if (!KERNEL32.DeviceIoControl(deviceHandle, IOCTL_USB_PACKET_SIZE.value(), null, 0, packetSize.getPointer(),
                 Pointer.SIZE, size, null)) {
-            throw new DeviceException("DeviceIoControl failed when getting USB packet size, error " + getLastError());
+            throw new NativeDeviceException("DeviceIoControl failed when getting USB packet size, error " + getLastError());
         }
 
         LOGGER.debug("USB packet size : " + packetSize.getValue());
@@ -118,7 +118,7 @@ public class DeviceWin32JNA implements DeviceNative {
         apiVersion.getPointer();
         if (!KERNEL32.DeviceIoControl(deviceHandle, IOCTL_API_VERSION.value(), null, 0, apiVersion.getPointer(),
                 Pointer.SIZE, size, null)) {
-            throw new DeviceException("DeviceIoControl failed when getting API version, error " + getLastError());
+            throw new NativeDeviceException("DeviceIoControl failed when getting API version, error " + getLastError());
         }
 
         LOGGER.debug("API version : " + apiVersion.getValue());
@@ -135,7 +135,7 @@ public class DeviceWin32JNA implements DeviceNative {
                 throw new NoDeviceFoundException("Garmin USB device (unit " + unit
                         + ") not present, or driver not installed");
             } else {
-                throw new DeviceException("SetupDiEnumDeviceInterfaces failed, error " + getLastError());
+                throw new NativeDeviceException("SetupDiEnumDeviceInterfaces failed, error " + getLastError());
             }
         }
 
@@ -163,7 +163,7 @@ public class DeviceWin32JNA implements DeviceNative {
         IntByReference sizeofDetailData = new IntByReference();
         if (!SETUPAPI.SetupDiGetDeviceInterfaceDetailA(hDeviceInfo, interfaceData, null, 0, sizeofDetailData, null)) {
             if (getLastError() != ERROR_INSUFFICIENT_BUFFER) {
-                throw new DeviceException("SetupDiGetDeviceInterfaceDetail (finding size) failed, error "
+                throw new NativeDeviceException("SetupDiGetDeviceInterfaceDetail (finding size) failed, error "
                         + getLastError());
             }
         }
@@ -173,7 +173,7 @@ public class DeviceWin32JNA implements DeviceNative {
                 .getValue());
         if (!SETUPAPI.SetupDiGetDeviceInterfaceDetailA(hDeviceInfo, interfaceData, deviceDetailData, sizeofDetailData
                 .getValue(), null, null)) {
-            throw new DeviceException("SetupDiGetDeviceInterfaceDetail failed, error " + getLastError());
+            throw new NativeDeviceException("SetupDiGetDeviceInterfaceDetail failed, error " + getLastError());
         }
         devicePath = Native.toString(deviceDetailData.devicePath);
 
@@ -197,7 +197,7 @@ public class DeviceWin32JNA implements DeviceNative {
                 throw new AccessDeniedException(
                         "exclusive access is denied; it's likely that something else already has control of the device");
             } else {
-                throw new DeviceException("CreateFile failed, error " + getLastError());
+                throw new NativeDeviceException("CreateFile failed, error " + getLastError());
             }
         }
     }
@@ -213,7 +213,7 @@ public class DeviceWin32JNA implements DeviceNative {
 
         try {
             if (!KERNEL32.CloseHandle(deviceHandle)) {
-                throw new DeviceException("Failed to close device, error " + getLastError());
+                throw new NativeDeviceException("Failed to close device, error " + getLastError());
             }
         } finally {
             deviceHandle = INVALID_HANDLE_VALUE;
@@ -264,14 +264,14 @@ public class DeviceWin32JNA implements DeviceNative {
 
     private void closeHandle(int event) {
         if (!KERNEL32.CloseHandle(event)) {
-            throw new DeviceException("CloseHandle failed, error " + getLastError());
+            throw new NativeDeviceException("CloseHandle failed, error " + getLastError());
         }
     }
 
     private OVERLAPPED newOverlappedWithEvent() {
         int event = KERNEL32.CreateEventA(null, true, false, null);
         if (event == 0) {
-            throw new DeviceException("CreateEvent failed, error " + getLastError());
+            throw new NativeDeviceException("CreateEvent failed, error " + getLastError());
         }
         return new OVERLAPPED(event);
     }
@@ -290,18 +290,18 @@ public class DeviceWin32JNA implements DeviceNative {
             LOGGER.debug("Writing " + length + " bytes");
             if (!KERNEL32.WriteFile(deviceHandle, buffer, length, null, overlapped)) {
                 if (getLastError() != ERROR_IO_PENDING) {
-                    throw new DeviceException("WriteFile failed for " + length + " bytes, error "
+                    throw new NativeDeviceException("WriteFile failed for " + length + " bytes, error "
                             + getLastError());
                 } else {
                     // Operation has been queued and will complete in the future.
                     LOGGER.debug("Queued write");
                     int waitResult = KERNEL32.WaitForSingleObject(overlapped.event, INFINITE);
                     if (waitResult != WAIT_OBJECT_0) {
-                        throw new DeviceException("Wait for WriteFile to complete returned " + waitResult + ", error "
+                        throw new NativeDeviceException("Wait for WriteFile to complete returned " + waitResult + ", error "
                                 + getLastError());
                     }
                     if (!KERNEL32.GetOverlappedResult(deviceHandle, overlapped, bytesWritten, true)) {
-                        throw new DeviceException("GetOverlappedResult failed, error " + getLastError());
+                        throw new NativeDeviceException("GetOverlappedResult failed, error " + getLastError());
                     }
                 }
             }
@@ -332,12 +332,12 @@ public class DeviceWin32JNA implements DeviceNative {
                 if (!KERNEL32.DeviceIoControl(deviceHandle, IOCTL_ASYNC_IN.value(), Pointer.NULL, 0, tempBuffer,
                         ASYNC_DATA_SIZE, bytesReturned, overlapped)) {
                     if (getLastError() != ERROR_IO_PENDING) {
-                        throw new DeviceException("DeviceIoControl async in failed, error " + getLastError());
+                        throw new NativeDeviceException("DeviceIoControl async in failed, error " + getLastError());
                     } else {
                         // Operation has been queued and will complete in the
                         // future.
                         if (!KERNEL32.ResetEvent(interruptAsyncInEvent)) {
-                            throw new DeviceException("ResetEvent failed, error " + getLastError());
+                            throw new NativeDeviceException("ResetEvent failed, error " + getLastError());
                         }
                         int events[] = new int[] { overlapped.event, interruptAsyncInEvent };
                         LOGGER.debug("No data immediately available, waiting");
@@ -345,14 +345,14 @@ public class DeviceWin32JNA implements DeviceNative {
                         if (waitResult == WAIT_OBJECT_0 + 1) {
                             LOGGER.debug("Wait for async receive interrupted");
                             if (!KERNEL32.CancelIo(deviceHandle)) {
-                                throw new DeviceException("CancelIo failed, error " + getLastError());
+                                throw new NativeDeviceException("CancelIo failed, error " + getLastError());
                             }
                             KERNEL32.WaitForSingleObject(overlapped.event, INFINITE);
                             return null;
                         }
 
                         if (!KERNEL32.GetOverlappedResult(deviceHandle, overlapped, bytesReturned, true)) {
-                            throw new DeviceException("GetOverlappedResult failed, error " + getLastError());
+                            throw new NativeDeviceException("GetOverlappedResult failed, error " + getLastError());
                         }
                     }
                 }
@@ -379,7 +379,7 @@ public class DeviceWin32JNA implements DeviceNative {
     @Override
     public void interruptAsyncIn() {
         if (!KERNEL32.SetEvent(interruptAsyncInEvent)) {
-            throw new DeviceException("SetEvent failed, error " + getLastError());
+            throw new NativeDeviceException("SetEvent failed, error " + getLastError());
         }
    }
 }
